@@ -29,6 +29,9 @@ public class CompressorRecipes extends SerializableRecipe {
 
 		recipes.put(new Pair(Fluids.PERFLUOROMETHYL, 0), new CompressorRecipe(1_000, new FluidStack(Fluids.PERFLUOROMETHYL, 1_000, 1), 50));
 		recipes.put(new Pair(Fluids.PERFLUOROMETHYL, 1), new CompressorRecipe(1_000, new FluidStack(Fluids.PERFLUOROMETHYL_COLD, 1_000, 0), 50));
+
+		recipes.put(new Pair(Fluids.GAS, 0), new CompressorRecipe(2_000, new FluidStack(Fluids.GAS, 1_000, 1), 20));
+		recipes.put(new Pair(Fluids.GAS, 1), new CompressorRecipe(2_000, new FluidStack(Fluids.CNG, 1_000), 20));
 	}
 
 	public static HashMap getRecipes() {

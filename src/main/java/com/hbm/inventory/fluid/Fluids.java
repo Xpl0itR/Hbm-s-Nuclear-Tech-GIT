@@ -193,6 +193,7 @@ public class Fluids {
 	public static FluidType ALUMINA;
 	public static FluidType CONCRETE;
 	public static FluidType DHC;
+	public static FluidType CNG;
 
 	/* Legacy names for compatibility purposes */
 	@Deprecated public static FluidType ACID;	//JAOPCA uses this, apparently
@@ -412,8 +413,10 @@ public class Fluids {
 		CONCRETE =				new FluidType("CONCRETE",			0xA2A2A2, 0, 0, 0, EnumSymbol.NONE).addTraits(LIQUID);
 		DHC =					new FluidType("DHC",				0xD2AFFF, 0, 0, 0, EnumSymbol.NONE).addTraits(GASEOUS);
 		AIRBLAST =				new FluidType("AIRBLAST",			0xFFDADA, 0, 3, 0, EnumSymbol.NONE).setTemp(1_200).addTraits(GASEOUS);
-		FLUE =					new FluidType(155, "FLUE",			0x131313, 1, 4, 1, EnumSymbol.NONE).addContainers(new CD_Gastank(0xFF4545, 0xFFE97F)).addTraits(new FT_Flammable(25_000), GASEOUS, new FT_Polluting().burn(PollutionType.SOOT, SOOT_GAS).release(PollutionType.SOOT, SOOT_GAS * 5));
-
+		FLUE =					new FluidType("FLUE",				0x131313, 1, 4, 1, EnumSymbol.NONE).addContainers(new CD_Gastank(0xFF4545, 0xFFE97F)).addTraits(new FT_Flammable(25_000), GASEOUS, new FT_Polluting().burn(PollutionType.SOOT, SOOT_GAS).release(PollutionType.SOOT, SOOT_GAS * 5));
+		CNG = 					new FluidType(156, "CNG", 			0xDEE1E6, 1, 4, 1, EnumSymbol.NONE).addContainers(new CD_Gastank(0xFF4545, 0xFFE97F)).addTraits(GASEOUS, P_GAS);
+		
+		
 		// ^ ^ ^ ^ ^ ^ ^ ^
 		//ADD NEW FLUIDS HERE
 
@@ -501,6 +504,7 @@ public class Fluids {
 		metaOrder.add(LUBRICANT);
 		metaOrder.add(FLUE);
 		metaOrder.add(GAS);
+		metaOrder.add(CNG);
 		metaOrder.add(GAS_COKER);
 		metaOrder.add(PETROLEUM);
 		metaOrder.add(SOURGAS);
@@ -766,6 +770,7 @@ public class Fluids {
 
 		registerCalculatedFuel(SYNGAS, (coalHeat * (1000 /* bucket */ / 100 /* mB per coal */) * flammabilityLow * demandLow * complexityChemplant) * 1.5, 1.25, FuelGrade.GAS); //same as coal oil, +50% bonus
 		registerCalculatedFuel(OXYHYDROGEN, 5_000, 3, FuelGrade.GAS); // whatever
+		registerCalculatedFuel(CNG, GAS.getTrait(FT_Flammable.class).getHeatEnergy() * 20, 2.5, FuelGrade.GAS); // same as nat gas, but more better because more nat gasses per gas
 
 		File config = new File(folder.getAbsolutePath() + File.separatorChar + "hbmFluidTraits.json");
 		File template = new File(folder.getAbsolutePath() + File.separatorChar + "_hbmFluidTraits.json");
